@@ -52,7 +52,7 @@
 					} },
 					{ title: '動作', data: 'action', name: 'action', className: 'text-right actions', orderable: false, searchable: false}
 				],
-				order: [[ 0, 'asc' ], [ 1, 'asc' ]]
+				// order: [[ 0, 'asc' ], [ 1, 'asc' ]]
 			});
 
 			window.dt = this.datatable;
