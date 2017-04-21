@@ -227,7 +227,7 @@
 
 			//used to determine the http verb to use [add=POST], [update=PUT]
 			var type = 'POST'; //for creating new resource
-			var url = '/clients';
+			var url = APP_URL + 'clients';
 
 			if ( row_id ) {
 				type = 'PUT'; //for updating existing resource
@@ -316,7 +316,7 @@
 			var row_id = $row.find('input[name="row_id"]').val();
 
 			var type = 'DELETE'; //for deleting the resource
-			var url = '/clients' + '/' + row_id;
+			var url = APP_URL + 'clients' + '/' + row_id;
 
 			$.ajax({
 				type: type,

@@ -200,7 +200,7 @@
 
 			//used to determine the http verb to use [add=POST], [update=PUT]
 			var type = 'POST'; //for creating new resource
-			var url = '/products';
+			var url = APP_URL + 'products';
 
 			if ( row_id ) {
 				type = 'PUT'; //for updating existing resource
