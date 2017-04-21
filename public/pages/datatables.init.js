@@ -10,7 +10,7 @@ var ordersButtons = function() {
             processing: false,
             serverSide: true,
             ajax:{
-                url :"/orders", // json datasource
+                url : APP_URL + "orders", // json datasource
                 error: function(){  // error handling code
                     console.log('something is wrong');    
                 }

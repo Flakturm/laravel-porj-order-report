@@ -26,3 +26,6 @@
 <![endif]-->
 
 <script src="{{ asset('js/modernizr.min.js') }}"></script>
+<script type="text/javascript">
+    var APP_URL = '{{ url('/').'/' }}';
+</script>

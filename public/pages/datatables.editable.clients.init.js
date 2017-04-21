@@ -35,7 +35,7 @@
 				processing: true,
 				serverSide: true,
 				ajax:{
-					url :"/clients", // json datasource
+					url : APP_URL + "clients", // json datasource
 					error: function(){  // error handling code
 						console.log('something is wrong');    
 					}
