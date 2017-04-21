@@ -26,7 +26,7 @@ $factory->define(turnip\User::class, function (Faker\Generator $faker) {
 $factory->define(turnip\Clients::class, function (Faker\Generator $faker) {
     return [
         'route' => $faker->randomElement($array = array ('A','B','C')),
-        'route_number' => $faker->unique()->numberBetween($min = 1, $max = 12000),
+        'route_number' => $faker->unique()->numberBetween($min = 1, $max = 15000),
         'name' => $faker->name,
         'is_small' => $faker->randomElement($array = array (0, 1)),
         'invoiced_daily' => $faker->randomElement($array = array (0, 1))
