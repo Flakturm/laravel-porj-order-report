@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('page_styles')
-    <link href="{{ asset('plugins/jquery-datatables-editable/datatables.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/jquery-datatables-editable/datatables.css') }}" rel="stylesheet" />
 @stop
 
 @section('page_title')
@@ -46,18 +46,18 @@
 @stop
 
 @section('page_script')
-    <script src="{{ asset('plugins/datatables/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/buttons.bootstrap.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/jszip.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables/responsive.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/jszip.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/datatables/responsive.bootstrap.min.js') }}"></script>
 
-    <script src="{{ asset('pages/datatables.init.js') }}"></script>
-    <script src="{{ asset('pages/ajax.init.js') }}"></script>
+    <script src="{{ asset('public/pages/datatables.init.js') }}"></script>
+    <script src="{{ asset('public/pages/ajax.init.js') }}"></script>
 
     <script>
         $(document).ready(function () {

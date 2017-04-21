@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('page_styles')
-    <link href="{{ asset('plugins/jquery-datatables-editable/datatables.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/jquery-datatables-editable/datatables.css') }}" rel="stylesheet" />
 @stop
 
 @section('page_title')
@@ -48,10 +48,10 @@
 @stop
 
 @section('editable_script')
-    <script src="{{ asset('plugins/jquery-datatables-editable/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/plugins/jquery-datatables-editable/jquery.dataTables.js') }}"></script>
 @stop
 @section('page_script')
-    <script src="{{ asset('pages/datatables.editable.clients.init.js') }}"></script>
+    <script src="{{ asset('public/pages/datatables.editable.clients.init.js') }}"></script>
     <script>
     $(document).ready(function(){
         @if (Session::has("state"))

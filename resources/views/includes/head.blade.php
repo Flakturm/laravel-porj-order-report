@@ -3,20 +3,20 @@
 <meta name="author" content="AndyWebDev">
 <meta name="_token" content="{{ csrf_token() }}">
 
-<link rel="shortcut icon" href="{{ asset('images/favicon_1.ico') }}">
+<link rel="shortcut icon" href="{{ asset('public/images/favicon_1.ico') }}">
 
 <title>@yield('page_title')</title>
 
 @yield('page_styles')
 
-<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('css/core.css') }}" rel="stylesheet" />
-<link href="{{ asset('css/components.css') }}" rel="stylesheet" />
-<link href="{{ asset('css/icons.css') }}" rel="stylesheet" />
-<link href="{{ asset('css/pages.css') }}" rel="stylesheet" />
-<link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/core.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/components.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/icons.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/pages.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/css/responsive.css') }}" rel="stylesheet" />
 
-<link href="{{ asset('plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
+<link href="{{ asset('public/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
 
 <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,7 +25,7 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
 
-<script src="{{ asset('js/modernizr.min.js') }}"></script>
+<script src="{{ asset('public/js/modernizr.min.js') }}"></script>
 <script type="text/javascript">
     var APP_URL = '{{ env('APP_URL') }}/';
 </script>

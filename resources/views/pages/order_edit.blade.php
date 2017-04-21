@@ -4,9 +4,9 @@
 {{ crumbs()->pageTitle() }}
 @stop
 @section('page_styles')
-    <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
 @stop
 @section('content')
 
@@ -120,9 +120,9 @@
 @stop
 
 @section('page_script')
-    <script src="{{ asset('plugins/select2/js/select2.min.js') }}"></script>
-    <script src="{{ asset('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('pages/ajax.init.js') }}"></script>
+    <script src="{{ asset('public/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('public/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('public/pages/ajax.init.js') }}"></script>
     <script>
         $(document).ready(function () {
             @if (Session::has("success"))
