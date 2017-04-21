@@ -16,20 +16,19 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        $orders = Orders::with('clients')->where( DB::raw('MONTH(ordered_date)'), '=', date('n') );
         if (\Request::ajax())
         {
+            $orders = Orders::with('clients')->where( DB::raw('MONTH(ordered_date)'), '=', date('n') );
             return Datatables::of($orders)
                     ->addColumn('action', function ($order) {
                         return '<a href=' . route('orders.edit', $order->id) . ' class="table-action-btn"><i class="md md-edit"></i></a><a href="" class="table-action-btn" data-id=' . $order->id . ' data-action=' . route('orders.destroy', $order->id) . ' data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a>';
                     })
                     ->make(true);
         }
-        $results = $orders->get();
 
         \Crumbs::add('/orders', '當月訂單');
         
-        return view('pages.orders', compact('results'));
+        return view('pages.orders');
     }
 
     public function all()

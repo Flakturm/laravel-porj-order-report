@@ -16,10 +16,10 @@ class ClientsController extends Controller
 {
     public function index()
     {
-        $results = Clients::all();
 
         if (\Request::ajax())
         {
+            $results = Clients::orderBy('route', 'asc')->orderBy('route_number', 'asc')->get();
             return Datatables::of($results)
                     ->addColumn('action', function ($result) {
                         $action = '<a href="" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
@@ -36,7 +36,7 @@ class ClientsController extends Controller
 
         \Crumbs::add('/clients', '客戶名單');
         
-        return view('pages.clients', compact('results'));
+        return view('pages.clients');
     }
 
     /**
