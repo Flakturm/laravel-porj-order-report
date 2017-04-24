@@ -79,9 +79,9 @@
             <div class="block">
                 <table class="table simsun borderless">
                     <tr style="font-size:17px">
-                        <td style="width:15%">路線: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
-                        <td>客戶名稱: <b>{{ $data->client->name }}</b></td>
-                        <td class="text-right">月份: <b>{{ $current_month }}</b></td>
+                        <td style="width:15%">Type: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
+                        <td>Client: <b>{{ $data->client->name }}</b></td>
+                        <td class="text-right">Month: <b>{{ $current_month }}</b></td>
                     </tr>
                 </table>
                 <table class="table text-center m-t-5">
@@ -108,7 +108,7 @@
                             </tr>
                         @endfor
                         <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">日總計</td>
+                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
                             @for ($i = 1; $i < 16; $i++)
                                 <td style="border-top: 2px solid #b5b5b5">
                                 @foreach ( $data->daily_sums as $sum )
@@ -145,7 +145,7 @@
                             </tr>
                         @endfor
                         <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">日總計</td>
+                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
                             @for ($i = 16; $i < 32; $i++)
                                 <td style="border-top: 2px solid #b5b5b5">
                                 @foreach ( $data->daily_sums as $sum )
@@ -225,7 +225,7 @@
                             </tr>
                         @endfor
                         <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">日總計</td>
+                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
                             @for ($i = 1; $i < 16; $i++)
                                 <td style="border-top: 2px solid #b5b5b5">
                                 @foreach ( $data->daily_sums as $sum )
@@ -262,7 +262,7 @@
                             </tr>
                         @endfor
                         <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">日總計</td>
+                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
                             @for ($i = 16; $i < 32; $i++)
                                 <td style="border-top: 2px solid #b5b5b5">
                                 @foreach ( $data->daily_sums as $sum )
