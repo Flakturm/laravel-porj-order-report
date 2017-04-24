@@ -31,16 +31,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title"><b>新增訂單</b></h4>
+                    <h4 class="m-t-0 header-title"><b>Create an order</b></h4>
                                     
                         {{ Form::open(['action' => 'OrdersController@store', 'class' => 'form-horizontal']) }}
                             <div class="form-group">
-                                <label class="col-md-2 control-label">客戶 <span class="text-danger">*</span></label>
+                                <label class="col-md-2 control-label">Client <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
                                     <select id="client_id" class="form-control select2" name="client_id">
                                         <option value="">Select</option>
                                         @foreach ($routes as $route)
-                                            <optgroup label="路線 {{ $route->route }}">
+                                            <optgroup label="Type {{ $route->route }}">
                                                 @foreach ($clients as $client)
                                                     @if ($route->route == $client->route)
                                                         <option value="{{ $client->id }}">{{ $client->route . $client->route_number . ' ' . $client->name }}</option>
@@ -52,13 +52,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 control-label">產品 <span class="text-danger">*</span></label>
+                                <label class="col-md-2 control-label">Product <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
                                     <table class="table table-striped m-0">
                                         <thead>
-                                            <th>產品</th>
-                                            <th>單價</th>
-                                            <th class="text-right">數量</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th class="text-right">Quantity</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($products as $product)
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">訂購日期 <span class="text-danger">*</span></label>
+                                <label class="control-label col-md-2">Ordered date <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
                                     <div class="input-group">
                                         {{ Form::text('ordered_date', null, ['class' => 'form-control', 'placeholder' => 'yyyy-mm-dd', 'id' => 'datepicker']) }}

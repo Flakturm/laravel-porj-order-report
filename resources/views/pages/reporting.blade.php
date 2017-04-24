@@ -20,7 +20,7 @@
 
         <div class="panel">
             <div class="panel-body">
-                <h4 class="m-t-0 m-b-20 header-title">查詢</h4>
+                <h4 class="m-t-0 m-b-20 header-title">Search</h4>
                 {{-- <div class="well m-t-10">
                     <ul class="nav nav-pills m-b-30">
                         <li class="">
@@ -35,20 +35,20 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                {{ Form::label('month', '期間', array('class' => 'control-label')) }}
+                                {{ Form::label('month', 'Month', array('class' => 'control-label')) }}
                                 <ul id="month" class="nav nav-pills">
                                     <li class="active">
-                                        <a href="" data-month="{{ $current_month }}" data-toggle="tab">本月</a>
+                                        <a href="" data-month="{{ $current_month }}" data-toggle="tab">Current</a>
                                     </li>
                                     <li>
-                                        <a href="" data-month="{{ $last_month }}" data-toggle="tab">上個月</a>
+                                        <a href="" data-month="{{ $last_month }}" data-toggle="tab">Previous</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                {{ Form::label('month', '路線', array('class' => 'control-label')) }}
+                                {{ Form::label('month', 'Type', array('class' => 'control-label')) }}
                                 <ul id="route" class="nav nav-pills">
                                     @forelse ($routes as $key => $route)
                                     <li @if ($key == 0) class="active" @endif>
@@ -59,7 +59,7 @@
                                     @endforelse
                                 </ul>
                             </div>
-                            <button type="button" id="button-filter" class="btn btn-primary pull-right {{ count($routes) ? 'enabled' : 'disabled' }}"><i class="fa fa-search"></i> 篩選</button>
+                            <button type="button" id="button-filter" class="btn btn-primary pull-right {{ count($routes) ? 'enabled' : 'disabled' }}"><i class="fa fa-search"></i> Filter</button>
                         </div>
                     </div>
                 </div>

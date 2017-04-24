@@ -31,24 +31,24 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title"><b>編輯訂單</b></h4>
+                    <h4 class="m-t-0 header-title"><b>Edit order</b></h4>
                                     
                         {{ Form::open(['route' => ['orders.update', $results->id], 'method' => 'PUT', 'class' => 'form-horizontal']) }}
                             <div class="form-group">
-                                <label class="col-md-2 control-label">客戶</label>
+                                <label class="col-md-2 control-label">Client</label>
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" readonly="" value="{{ $results->clients->name }}">                                    
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 control-label">產品 <span class="text-danger">*</span></label>
+                                <label class="col-md-2 control-label">Product <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
                                     <table class="table table-striped m-0">
                                         <thead>
-                                            <th>產品</th>
-                                            <th>單價</th>
-                                            <th class="text-right">數量</th>
-                                            <th class="text-right">小計</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th class="text-right">Quantity</th>
+                                            <th class="text-right">Total</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($products as $product)
@@ -88,13 +88,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">總計</label>
+                                <label class="col-sm-2 control-label">Total</label>
                                 <div class="col-sm-10">
                                     <p class="form-control-static">${{ $results->total }}</p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">訂購日期 <span class="text-danger">*</span></label>
+                                <label class="control-label col-md-2">Ordered date <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
                                     <div class="input-group">
                                         {{ Form::text('ordered_date', $results->ordered_date, ['class' => 'form-control', 'placeholder' => 'yyyy-mm-dd', 'id' => 'datepicker']) }}

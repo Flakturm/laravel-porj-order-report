@@ -160,31 +160,31 @@
                 </table>
                 <table class="table borderless m-t-10">
                     <tr>
-                        <td width="55%"><h2 class="simsun text-center">收執聯</h2></td>
+                        <td width="55%"><h2 class="simsun text-center">Receipt (Kept by Payee)</h2></td>
                         <td>
                             <table class="table simsun borderless text-right">
                                 @for ($i = 0; $i < count($products); $i++)
                                     <tr>
-                                        <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (總數量)</td>
+                                        <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (Total quantity)</td>
                                         @forelse ($data->monthly_sums as $item)
                                             @if ($item->name == $products[$i]->name)
                                             <td style="border-bottom:1px solid #333">{{ $item->total_quantity }}</td>
-                                            <td style="border-bottom:1px solid #333">單價</td>
+                                            <td style="border-bottom:1px solid #333">Price</td>
                                             <td style="width:15%;border-bottom:1px solid #333">${{ $item->price + 0 }}/{{ $item->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">金額</td>
+                                            <td style="border-bottom:1px solid #333">Total</td>
                                             <td style="width:20%;border-bottom:1px solid #333">${{ $item->sum + 0 }}</td>
                                             @endif
                                         @empty
                                             <td style="border-bottom:1px solid #333"></td>
-                                            <td style="border-bottom:1px solid #333">單價</td>
+                                            <td style="border-bottom:1px solid #333">Price</td>
                                             <td style="width:15%;border-bottom:1px solid #333">/{{ $products[$i]->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">金額</td>
+                                            <td style="border-bottom:1px solid #333">Total</td>
                                             <td style="width:20%;border-bottom:1px solid #333"></td>
                                         @endforelse
                                     </tr>
                                 @endfor
                                 <tr>
-                                    <td colspan="5" style="width: 85%">總金額</td>
+                                    <td colspan="5" style="width: 85%">Total amount</td>
                                     <td style="width: 15%;border-top:1px solid #333">{{ $data->client_sum ? 'NT$' . ($data->client_sum->sum + 0) : '' }}</td>
                                 </tr>
                             </table>
@@ -196,9 +196,9 @@
             <div class="block">
                 <table class="table simsun borderless">
                     <tr style="font-size:17px">
-                        <td style="width:15%">路線: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
-                        <td>客戶名稱: <b>{{ $data->client->name }}</b></td>
-                        <td class="text-right">月份: <b>{{ $current_month }}</b></td>
+                        <td style="width:15%">Type: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
+                        <td>Client: <b>{{ $data->client->name }}</b></td>
+                        <td class="text-right">Month: <b>{{ $current_month }}</b></td>
                     </tr>
                 </table>
                 <table class="table text-center m-t-5">
@@ -277,31 +277,31 @@
                 </table>
                 <table class="table borderless m-t-10">
                     <tr>
-                        <td width="55%"><h2 class="simsun text-center">存根聯</h2></td>
+                        <td width="55%"><h2 class="simsun text-center">Receipt</h2></td>
                         <td>
                             <table class="table simsun borderless text-right">
                                 @for ($i = 0; $i < count($products); $i++)
                                     <tr>
-                                        <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (總數量)</td>
+                                        <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (Total quantity)</td>
                                         @forelse ($data->monthly_sums as $item)
                                             @if ($item->name == $products[$i]->name)
                                             <td style="border-bottom:1px solid #333">{{ $item->total_quantity }}</td>
-                                            <td style="border-bottom:1px solid #333">單價</td>
+                                            <td style="border-bottom:1px solid #333">Price</td>
                                             <td style="width:15%;border-bottom:1px solid #333">${{ $item->price + 0 }}/{{ $item->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">金額</td>
+                                            <td style="border-bottom:1px solid #333">Total</td>
                                             <td style="width:20%;border-bottom:1px solid #333">${{ $item->sum + 0 }}</td>
                                             @endif
                                         @empty
                                             <td style="border-bottom:1px solid #333"></td>
-                                            <td style="border-bottom:1px solid #333">單價</td>
+                                            <td style="border-bottom:1px solid #333">Price</td>
                                             <td style="width:15%;border-bottom:1px solid #333">/{{ $products[$i]->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">金額</td>
+                                            <td style="border-bottom:1px solid #333">Total</td>
                                             <td style="width:20%;border-bottom:1px solid #333"></td>
                                         @endforelse
                                     </tr>
                                 @endfor
                                 <tr>
-                                    <td colspan="5" style="width: 85%">總金額</td>
+                                    <td colspan="5" style="width: 85%">Total amount</td>
                                     <td style="width: 15%;border-top:1px solid #333">{{ $data->client_sum ? 'NT$' . ($data->client_sum->sum + 0) : '' }}</td>
                                 </tr>
                             </table>

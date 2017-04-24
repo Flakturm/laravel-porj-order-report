@@ -26,7 +26,7 @@ class OrdersController extends Controller
                     ->make(true);
         }
 
-        \Crumbs::add('/orders', '當月訂單');
+        \Crumbs::add('/orders', 'Current month orders');
         
         return view('pages.orders');
     }
@@ -35,15 +35,15 @@ class OrdersController extends Controller
     {
         $results = Orders::with('clients')->get();
 
-        \Crumbs::add('/orders', '全部訂單');
+        \Crumbs::add('/orders', 'All orders');
         
         return view('pages.orders', compact('results'));
     }
 
     public function create()
     {
-        \Crumbs::add('/orders', '訂單');
-        \Crumbs::addCurrent("新增");
+        \Crumbs::add('/orders', 'Orders');
+        \Crumbs::addCurrent("Add");
         $routes = Clients::select('route')->distinct()->get();
         $clients = Clients::orderBy('route_number')->get();
         $products = Products::all();
@@ -60,8 +60,8 @@ class OrdersController extends Controller
         ];
 
         $attributes = [
-            'client_id' => '客戶',
-            'ordered_date' => '訂購日期'
+            'client_id' => 'Client',
+            'ordered_date' => 'Ordered date'
         ];
         
         $validator = \Validator::make( $request->all(), $rules, [], $attributes );
@@ -85,7 +85,7 @@ class OrdersController extends Controller
             ];
 
             $attributes = [
-                'quantity' => '數量'
+                'quantity' => 'Quantity'
             ];
             
             $validator = \Validator::make( $item, $rules, [], $attributes );
@@ -122,7 +122,7 @@ class OrdersController extends Controller
             }
         }
 
-        $request->session()->flash('success', '儲存成功');
+        $request->session()->flash('success', 'Order saved');
         if ( $request->input('redirect') )
         {
             return \Response::json(array('success' => true, 'redirect' => route('orders.index')), 200);
@@ -134,8 +134,8 @@ class OrdersController extends Controller
     {
         try
         {
-            \Crumbs::add('/orders', '訂單');
-            \Crumbs::addCurrent("編輯");
+            \Crumbs::add('/orders', 'Orders');
+            \Crumbs::addCurrent("Edit");
             $results = Orders::with('clients', 'orderProducts.products')->findOrFail( $id );
             $client = Clients::select('is_small')->find( $results->client_id );
             if ( $client->is_small )
@@ -172,7 +172,7 @@ class OrdersController extends Controller
         ];
 
         $attributes = [
-            'ordered_date' => '訂購日期'
+            'ordered_date' => 'Ordered date'
         ];
         
         $validator = \Validator::make( $request->all(), $rules, [], $attributes );
@@ -201,7 +201,7 @@ class OrdersController extends Controller
             ];
 
             $attributes = [
-                'quantity' => '數量'
+                'quantity' => 'Quantity'
             ];
             
             $validator = \Validator::make( $item, $rules, [], $attributes );
@@ -243,10 +243,10 @@ class OrdersController extends Controller
 
         if ( $request->input('redirect') )
         {
-            $request->session()->flash('success', '儲存成功');
+            $request->session()->flash('success', 'Order saved');
             return \Response::json(array('success' => true, 'redirect' => route('orders.index')), 200);
         }
-        return \Response::json(array('success' => true, 'message' => '儲存成功'), 200);
+        return \Response::json(array('success' => true, 'message' => 'Order saved'), 200);
     }
 
     public function destroy( Request $request )
@@ -256,11 +256,11 @@ class OrdersController extends Controller
 
         if ( $request->input('redirect') )
         {
-            $request->session()->flash('success', '刪除成功');
+            $request->session()->flash('success', 'Order deleted');
             return \Response::json(array('success' => true, 'redirect' => route('orders.index')), 200);
         }
 
-        return \Response::json(array('success' => true, 'message' => '刪除成功'), 200);
+        return \Response::json(array('success' => true, 'message' => 'Order deleted'), 200);
     }
 
     public function ajaxProductPrice( int $id = null )

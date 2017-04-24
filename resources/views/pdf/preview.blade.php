@@ -19,7 +19,7 @@
                 <div class="row m-t-10 m-b-10">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="pull-right m-b-5">
-                            <a href="{{ $pdf_url }}" class="btn btn-primary dropdown-toggle waves-effect" aria-expanded="false">下載 PDF <span class="m-l-5"><i class="fa fa-print"></i></span></a>
+                            <a href="{{ $pdf_url }}" class="btn btn-primary dropdown-toggle waves-effect" aria-expanded="false">Download PDF <span class="m-l-5"><i class="fa fa-print"></i></span></a>
                         </div>
                     </div>
                 </div>
@@ -29,9 +29,9 @@
                         <div class="card-box col-md-10 col-md-offset-1">
                             <table class="table table-borderless">
                                 <tr style="font-size:17px">
-                                    <td style="width:15%">路線: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
-                                    <td>客戶名稱: <b>{{ $data->client->name }}</b></td>
-                                    <td class="text-right">月份: <b>{{ $current_month }}</b></td>
+                                    <td style="width:15%">Type: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
+                                    <td>Client: <b>{{ $data->client->name }}</b></td>
+                                    <td class="text-right">Month: <b>{{ $current_month }}</b></td>
                                 </tr>
                             </table>
                             <table class="table text-center table-bordered table-hover">
@@ -110,25 +110,25 @@
                             </table>
                             <table class="table table-borderless">
                                 <tr>
-                                    <td width="55%"><h2 class="text-center">收執聯</h2></td>
+                                    <td width="55%"><h2 class="text-center">Receipt</h2></td>
                                     <td>
                                         <table class="table text-right">
                                             @for ($i = 0; $i < count($products); $i++)
                                                 <tr>
-                                                    <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (總數量)</td>
+                                                    <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (Total quantity)</td>
                                                     @foreach ($data->monthly_sums as $item)
                                                         @if ($item->name == $products[$i]->name)
                                                         <td style="border-bottom:1px solid #333">{{ $item->total_quantity }}</td>
-                                                        <td style="border-bottom:1px solid #333">單價</td>
+                                                        <td style="border-bottom:1px solid #333">Price</td>
                                                         <td style="width:15%;border-bottom:1px solid #333">${{ $item->price + 0 }}/{{ $item->unit }}</td>
-                                                        <td style="border-bottom:1px solid #333">金額</td>
+                                                        <td style="border-bottom:1px solid #333">Total</td>
                                                         <td style="width:20%;border-bottom:1px solid #333">${{ $item->sum + 0 }}</td>
                                                         @endif
                                                     @endforeach
                                                 </tr>
                                             @endfor
                                             <tr>
-                                                <td colspan="5" style="width: 85%">總金額</td>
+                                                <td colspan="5" style="width: 85%">Total amount</td>
                                                 <td style="width: 15%">NT${{ $data->client_sum ? $data->client_sum->sum + 0 : '0' }}</td>
                                             </tr>
                                         </table>

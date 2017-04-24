@@ -18,11 +18,11 @@ var ordersButtons = function() {
             dom: "Bfrtip",
             columns: [
                     { title: 'ID', data: 'id' },
-                    { title: '客戶編號', data: 'clients.route' },
-					{ title: '客戶', data: 'clients.name' },
-					{ title: '訂購日期', data: 'ordered_date' },
-					{ title: '總計', data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '$' ), className: 'text-right' },
-					{ title: '動作', data: 'action', name: 'action', className: 'text-right', orderable: false, searchable: false}
+                    { title: 'Client type', data: 'clients.route' },
+					{ title: 'Client', data: 'clients.name' },
+					{ title: 'Ordered date', data: 'ordered_date' },
+					{ title: 'Total', data: 'total', name: 'total', render: $.fn.dataTable.render.number( ',', '.', 0, '$' ), className: 'text-right' },
+					{ title: 'Actions', data: 'action', name: 'action', className: 'text-right', orderable: false, searchable: false}
             ],
             order: [[ 0, 'desc' ]],
             buttons: [{

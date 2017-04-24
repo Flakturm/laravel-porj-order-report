@@ -24,9 +24,9 @@ class ClientsController extends Controller
                     ->addColumn('action', function ($result) {
                         $action = '<a href="" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                     <a href="" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                    <a href=' . url('clients', [$result->id, 'pdf', 'preview']) . ' target="_blank" data-toggle="tooltip" data-placement="bottom" title="預覽本月訂單"><i class="fa fa-print"></i></a>
-                                    <a href=' . route('clients.edit',  $result->id) . ' class="view-edit" data-toggle="tooltip" data-placement="bottom" title="查看編輯"><i class="fa fa-search"></i></a>
-                                    <a href="" class="on-default edit-row" data-toggle="tooltip" data-placement="bottom" title="快速編輯"><i class="fa fa-pencil"></i></a>
+                                    <a href=' . url('clients', [$result->id, 'pdf', 'preview']) . ' target="_blank" data-toggle="tooltip" data-placement="bottom" title="Preview"><i class="fa fa-print"></i></a>
+                                    <a href=' . route('clients.edit',  $result->id) . ' class="view-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-search"></i></a>
+                                    <a href="" class="on-default edit-row" data-toggle="tooltip" data-placement="bottom" title="Quick edit"><i class="fa fa-pencil"></i></a>
                                     <a href="" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
                                     <input name="row_id" type="hidden" value=' . $result->id . '>';
                         return $action;
@@ -34,7 +34,7 @@ class ClientsController extends Controller
                     ->make(true);
         }
 
-        \Crumbs::add('/clients', '客戶名單');
+        \Crumbs::add('/clients', 'Clients');
         
         return view('pages.clients');
     }
@@ -54,13 +54,13 @@ class ClientsController extends Controller
         ];
 
         $messages = [
-            'route.unique_with' => '已經有相同的路線標號組合了!',
+            'route.unique_with' => 'This type and number combination already exists!',
         ];
 
         $attributes = [
-            'route' => '路線',
-            'route_number' => '編號',
-            'name' => '客戶名稱'
+            'route' => 'Type',
+            'route_number' => 'Number',
+            'name' => 'Client'
         ];
         
         $validator = \Validator::make( $request->all(), $rules, $messages, $attributes );
@@ -117,13 +117,13 @@ class ClientsController extends Controller
         );
 
         $messages = [
-            'route.unique_with' => '已經有相同的路線標號組合了!',
+            'route.unique_with' => 'Type exists!',
         ];
 
         $attributes = [
-            'route' => '路線',
-            'route_number' => '編號',
-            'name' => '客戶名稱'
+            'route' => 'Type',
+            'route_number' => 'Number',
+            'name' => 'Client'
         ];
 
         $validator = \Validator::make( $request->all(), $rules, $messages, $attributes );
@@ -146,10 +146,10 @@ class ClientsController extends Controller
             if ( $request->input('redirect') )
             {
                 $request->session()->flash('state', 'success');
-                $request->session()->flash('message', '儲存成功');
+                $request->session()->flash('message', 'Client saved');
                 return \Response::json(array('success' => true, 'redirect' => route('clients.index')), 200);
             }
-            return \Response::json(array('success' => true, 'message' => '儲存成功'), 200);
+            return \Response::json(array('success' => true, 'message' => 'Client saved'), 200);
         }
         catch (ModelNotFoundException $err)
         {
@@ -172,11 +172,11 @@ class ClientsController extends Controller
         if ( $request->input('redirect') == true )
         {
             $request->session()->flash('state', 'success');
-            $request->session()->flash('message', '刪除成功');
+            $request->session()->flash('message', 'Client deleted');
             return \Response::json(array('success' => true, 'redirect' => route('clients.index')), 200);
         }
 
-        return \Response::json(array('success' => true, 'message' => '刪除成功'), 200);
+        return \Response::json(array('success' => true, 'message' => 'Client deleted'), 200);
     }
 
     public function pdf( int $id, $action = 'preview' )
@@ -193,7 +193,7 @@ class ClientsController extends Controller
         if ( $monthly_orders->count() == 0 )
         {
             \Session::flash('state', 'warning');
-            \Session::flash('message', '查無資料');
+            \Session::flash('message', 'No record found');
             return \Redirect::route('clients.index');
         }
 
@@ -214,12 +214,12 @@ class ClientsController extends Controller
         
         $products = Products::all();
         $pdf_url = url('clients', [$id, 'pdf', 'print']);
-        $title = $client->route . $client->route_number . ' ' . $client->name . ' 月銷售單';
+        $title = $client->route . $client->route_number . ' ' . $client->name . ' Report';
         if ( $action == 'print' )
         {
              $pdf = \PDF::loadView('pdf.print', compact('title', 'products', 'clients_arr', 'current_month'))
                 ->setPaper('a4', 'landscape');
-            return $pdf->stream($client->route . $client->route_number . '-' . $current_month . '-月銷售單.pdf');
+            return $pdf->stream($client->route . $client->route_number . '-' . $current_month . '-report.pdf');
         }
         else
         {

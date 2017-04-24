@@ -12,7 +12,7 @@ class ProductsController extends Controller
     {
         $results = Products::all();
 
-        \Crumbs::add('/products', '產品');
+        \Crumbs::add('/products', 'Products');
         
         return view('pages.products', compact('results'));
     }
@@ -33,10 +33,10 @@ class ProductsController extends Controller
         ];
 
         $attributes = [
-            'name' => '產品',
-            'price' => '單價',
-            'price2' => '單價(小)',
-            'unit' => '單位'
+            'name' => 'Product',
+            'price' => 'Price',
+            'price2' => 'Price(Small)',
+            'unit' => 'Unit'
         ];
         
         $validator = \Validator::make( $request->all(), $rules, [], $attributes );
@@ -73,10 +73,10 @@ class ProductsController extends Controller
         ];
 
         $attributes = [
-            'name' => '產品',
-            'price' => '單價',
-            'price2' => '單價(小)',
-            'unit' => '單位'
+            'name' => 'Product',
+            'price' => 'Price',
+            'price2' => 'Price(Small)',
+            'unit' => 'Unit'
         ];
         
         $validator = \Validator::make( $request->all(), $rules, [], $attributes );

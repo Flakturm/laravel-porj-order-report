@@ -36,11 +36,11 @@
                     <table class="table table-striped" id="datatable-editable">
                         <thead>
                             <tr>
-                                <th>產品</th>
-                                <th>單價</th>
-                                <th>單價(小)</th>
-                                <th>單位</th>
-                                <th class="text-right">動作</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Price(small)</th>
+                                <th>Unit</th>
+                                <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -14,27 +14,27 @@
                 </li> --}}
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="ti-shopping-cart"></i><span> 訂單 </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="ti-shopping-cart"></i><span> Orders </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="{{ url('orders') }}"><span>當月</span></a></li>
-                        <li><a href="{{ url('orders', ['all']) }}"><span>全部</span></a></li>
+                        <li><a href="{{ url('orders') }}"><span>Current month</span></a></li>
+                        <li><a href="{{ url('orders', ['all']) }}"><span>All</span></a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="{{ url('clients') }}" class="waves-effect {{ current_page('clients') ? 'active' : '' }}"><i class="icon-people"></i> <span> 客戶名單 </span> </a>
+                    <a href="{{ url('clients') }}" class="waves-effect {{ current_page('clients') ? 'active' : '' }}"><i class="icon-people"></i> <span> Clients </span> </a>
                 </li>
 
                 <li>
-                    <a href="{{ url('products') }}" class="waves-effect {{ current_page('products') ? 'active' : '' }}"><i class="glyphicon glyphicon-barcode"></i><span> 產品 </span> </a>
+                    <a href="{{ url('products') }}" class="waves-effect {{ current_page('products') ? 'active' : '' }}"><i class="glyphicon glyphicon-barcode"></i><span> Products </span> </a>
                 </li>
 
                 <li>
-                    <a href="{{ url('reporting') }}" class="waves-effect {{ current_page('reporting') ? 'active' : '' }}"><i class="glyphicon glyphicon-list-alt"></i><span> 訂單報告 </span> </a>
+                    <a href="{{ url('reporting') }}" class="waves-effect {{ current_page('reporting') ? 'active' : '' }}"><i class="glyphicon glyphicon-list-alt"></i><span> Reporting </span> </a>
                 </li>
 
                 {{-- <li>
-                    <a href="{{ url('settings') }}" class="waves-effect {{ current_page('settings') ? 'active' : '' }}"><i class="ti-settings"></i><span> 設定 </span> </a>
+                    <a href="{{ url('settings') }}" class="waves-effect {{ current_page('settings') ? 'active' : '' }}"><i class="ti-settings"></i><span> Settings </span> </a>
                 </li> --}}
 
             </ul>

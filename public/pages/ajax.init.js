@@ -24,7 +24,7 @@ function doAjax (type, url, formData) {
             $.Notification.notify(
                 'success',
                 'top right',
-                '提醒',
+                'Messages',
                 data.message
             )
         },
@@ -39,7 +39,7 @@ function doAjax (type, url, formData) {
                 $.Notification.notify(
                     'error',
                     'top right',
-                    '提醒',
+                    'Messages',
                     error_msg
                 )
             });
@@ -156,7 +156,7 @@ var handleDeleteRowAjax = function(arr_data) {
                 $.Notification.notify(
                     'error',
                     'top right',
-                    '提醒',
+                    'Messages',
                     error_msg
                 )
             });
@@ -205,7 +205,7 @@ getProductsAjax = function(order_product) {
                 $.Notification.notify(
                     'error',
                     'top right',
-                    '提醒',
+                    'Messages',
                     error_msg
                 )
             });

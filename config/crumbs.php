@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'home_title'    => '首頁',
+    'home_title'    => 'Home',
     'home_url'      => '',
     'admin_title'   => 'Admin',
     'admin_url'     => 'admin.index',

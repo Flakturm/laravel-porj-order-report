@@ -17,7 +17,7 @@ class ReportingController extends Controller
      */
     public function index()
     {
-        \Crumbs::add('/reporting', '訂單報告');
+        \Crumbs::add('/reporting', 'Reporting');
         $routes = Clients::select('route')->distinct()->orderBy('route', 'asc')->get();
 
         $now_obj = Carbon::now();
@@ -42,7 +42,7 @@ class ReportingController extends Controller
         if ( $clients->count() == 0 )
         {
             \Session::flash('state', 'warning');
-            \Session::flash('message', '查無資料');
+            \Session::flash('message', 'No record found');
             return \Redirect::route('reporting.index');
         }
         $products = Products::all();
@@ -59,7 +59,7 @@ class ReportingController extends Controller
         }
 
         $pdf_url = url('reporting', ['pdf', $month, $route, 'print']);
-        $title = $route . ' ' . $current_month . ' 月銷售單';
+        $title = $route . ' ' . $current_month . ' Report';
         // dd($clients_arr);
         if ( $action == 'print' )
         {
@@ -67,7 +67,7 @@ class ReportingController extends Controller
             set_time_limit(0);
              $pdf = \PDF::loadView('pdf.print', compact('title', 'products', 'clients_arr', 'current_month'))
                 ->setPaper('a4', 'landscape');
-            return $pdf->download($route . '-' . $current_month . '-月銷售單.pdf');
+            return $pdf->download($route . '-' . $current_month . '-report.pdf');
         }
         else
         {

@@ -41,16 +41,16 @@
 					}
 				},
 				columns: [
-					{ title: '路線', data: 'route' },
-                    { title: '編號', data: 'route_number' },
-					{ title: '客戶', data: 'name' },
-					{ title: '尺寸', data: 'is_small', name: 'is_small', className: 'client-size', render: function(data,type,row,meta){
-						return data == 1 ? '小' : '普通';
+					{ title: 'Type', data: 'route' },
+                    { title: 'Number', data: 'route_number' },
+					{ title: 'Client', data: 'name' },
+					{ title: 'Size', data: 'is_small', name: 'is_small', className: 'client-size', render: function(data,type,row,meta){
+						return data == 1 ? 'Small' : 'Regular';
 					} },
-					{ title: '請款頻率', data: 'invoiced_daily', name: 'invoiced_daily', className: 'text-right client-invoiced', render: function(data,type,row,meta){
-						return data == 1 ? '日' : '年';
+					{ title: 'Invoiced', data: 'invoiced_daily', name: 'invoiced_daily', className: 'text-right client-invoiced', render: function(data,type,row,meta){
+						return data == 1 ? 'Daily' : 'Annually';
 					} },
-					{ title: '動作', data: 'action', name: 'action', className: 'text-right actions', orderable: false, searchable: false}
+					{ title: 'Actions', data: 'action', name: 'action', className: 'text-right actions', orderable: false, searchable: false}
 				],
 				// order: [[ 0, 'asc' ], [ 1, 'asc' ]]
 			});
@@ -283,7 +283,7 @@
 					$.Notification.notify(
 						'success',
 						'top right',
-						'儲存成功'
+						'Saved'
 					);
 				},
 				error: function (data) {
@@ -296,7 +296,7 @@
 					$.Notification.notify(
 						'error',
 						'top right',
-						'提醒',
+						'Messages',
 						error_msg
 					);
 				}
@@ -334,7 +334,7 @@
 					$.Notification.notify(
 						'success',
 						'top right',
-						'刪除成功'
+						'Delete was successful'
 					);
 				},
 				error: function (data) {
@@ -343,7 +343,7 @@
 					$.Notification.notify(
 						'error',
 						'top right',
-						'提醒',
+						'Messages',
 						response
 					);
 				}
