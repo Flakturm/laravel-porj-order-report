@@ -3,6 +3,7 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>{{ $title }}</title>
+        <link href="{{ asset('public/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
         <style media="print">
         @page 
         {
@@ -16,9 +17,43 @@
         </style>
         <style>
         @page { margin: 20px !important; }
-        #.simsun {
-        #    font-family: 'simsun';
-        #}
+        @media screen {
+            body {
+                background: #ebeff2;
+            }
+            #container {
+                margin: auto;
+                width: 80%;
+            }
+            #print-btn {
+                background-color: #5fbeaa;
+                border: 1px solid #5fbeaa;
+                color: #ffffff;
+                border-radius: 3px;
+                outline: none !important;
+                font-size: 14px;
+                font-weight: 400;
+                padding: 6px 12px;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                margin: 15px 0;
+                float: right;
+            }
+            #content {
+                clear: both;
+            }
+            .block {
+                padding: 20px;
+                border: 1px solid rgba(54, 64, 74, 0.05);
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+                -moz-border-radius: 5px;
+                background-clip: padding-box;
+                margin-bottom: 20px;
+                background-color: #ffffff;
+            }
+        }
         .table {
             width: 100%;
             max-width: 100%;
@@ -46,6 +81,7 @@
             background-color: #eee;
             width: 8%;
             text-align: left;
+            padding: 2px 8px;
         }
         .table td, .table th {
             border: 1px solid #b5b5b5;
@@ -74,244 +110,140 @@
     </head>
 
 	<body>
-        <button class="no-print" onClick="window.print()">Print</button>
-        @foreach ($clients_arr as $key => $data)
-            <div class="block">
-                <table class="table simsun borderless">
-                    <tr style="font-size:17px">
-                        <td style="width:15%">Type: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
-                        <td>Client: <b>{{ $data->client->name }}</b></td>
-                        <td class="text-right">Month: <b>{{ $current_month }}</b></td>
-                    </tr>
-                </table>
-                <table class="table text-center m-t-5">
-                    <tbody>
-                        <tr class="bold">
-                            <th></th>
-                            @for ($i = 1; $i < 16; $i++)
-                                <th>{{ $i }}</th>
-                            @endfor
-                        </tr>
-                        @for ($i = 0; $i < count($products); $i++)
-                            <tr>
-                                <td class="bold simsun l-col bold">{{ $products[$i]->name }}</td>
-                                @for ($j = 1; $j < 16; $j++)
-                                    <td>
-                                        @foreach ( $data->monthly_orders as $order )
-                                            @if ( Carbon\Carbon::parse($order->ordered_date)->format('d') == $j 
-                                                AND $order->product_id == $products[$i]->id )
-                                                {{ $order->quantity }}
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                @endfor
-                            </tr>
-                        @endfor
-                        <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
-                            @for ($i = 1; $i < 16; $i++)
-                                <td style="border-top: 2px solid #b5b5b5">
-                                @foreach ( $data->daily_sums as $sum )
-                                    @if ( Carbon\Carbon::parse($sum->ordered_date)->format('d') == $i )
-                                        {{ $sum->sum + 0 }}
-                                    @endif
-                                @endforeach
-                                </td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table text-center m-t-10">
-                    <tbody>
-                        <tr class="bold">
-                            <th></th>
-                            @for ($i = 16; $i < 32; $i++)
-                                <th>{{ $i }}</th>
-                            @endfor
-                        </tr>
-                        @for ($i = 0; $i < count($products); $i++)
-                            <tr>
-                                <td class="bold simsun l-col bold">{{ $products[$i]->name }}</td>
-                                @for ($j = 16; $j < 32; $j++)
-                                    <td>
-                                        @foreach ( $data->monthly_orders as $order )
-                                            @if ( Carbon\Carbon::parse($order->ordered_date)->format('d') == $j 
-                                                AND $order->product_id == $products[$i]->id )
-                                                {{ $order->quantity }}
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                @endfor
-                            </tr>
-                        @endfor
-                        <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
-                            @for ($i = 16; $i < 32; $i++)
-                                <td style="border-top: 2px solid #b5b5b5">
-                                @foreach ( $data->daily_sums as $sum )
-                                    @if ( Carbon\Carbon::parse($sum->ordered_date)->format('d') == $i )
-                                        {{ $sum->sum + 0 }}
-                                    @endif
-                                @endforeach
-                                </td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table borderless m-t-10">
-                    <tr>
-                        <td width="55%"><h2 class="simsun text-center">Receipt (Kept by Payee)</h2></td>
-                        <td>
-                            <table class="table simsun borderless text-right">
-                                @for ($i = 0; $i < count($products); $i++)
-                                    <tr>
-                                        <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (Total quantity)</td>
-                                        @forelse ($data->monthly_sums as $item)
-                                            @if ($item->name == $products[$i]->name)
-                                            <td style="border-bottom:1px solid #333">{{ $item->total_quantity }}</td>
-                                            <td style="border-bottom:1px solid #333">Price</td>
-                                            <td style="width:15%;border-bottom:1px solid #333">${{ $item->price + 0 }}/{{ $item->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">Total</td>
-                                            <td style="width:20%;border-bottom:1px solid #333">${{ $item->sum + 0 }}</td>
-                                            @endif
-                                        @empty
-                                            <td style="border-bottom:1px solid #333"></td>
-                                            <td style="border-bottom:1px solid #333">Price</td>
-                                            <td style="width:15%;border-bottom:1px solid #333">/{{ $products[$i]->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">Total</td>
-                                            <td style="width:20%;border-bottom:1px solid #333"></td>
-                                        @endforelse
-                                    </tr>
-                                @endfor
-                                <tr>
-                                    <td colspan="5" style="width: 85%">Total amount</td>
-                                    <td style="width: 15%;border-top:1px solid #333">{{ $data->client_sum ? 'NT$' . ($data->client_sum->sum + 0) : '' }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <hr>
-            <div class="block">
-                <table class="table simsun borderless">
-                    <tr style="font-size:17px">
-                        <td style="width:15%">Type: <b>{{ $data->client->route . $data->client->route_number }}</b></td>
-                        <td>Client: <b>{{ $data->client->name }}</b></td>
-                        <td class="text-right">Month: <b>{{ $current_month }}</b></td>
-                    </tr>
-                </table>
-                <table class="table text-center m-t-5">
-                    <tbody>
-                        <tr class="bold">
-                            <th></th>
-                            @for ($i = 1; $i < 16; $i++)
-                                <th>{{ $i }}</th>
-                            @endfor
-                        </tr>
-                        @for ($i = 0; $i < count($products); $i++)
-                            <tr>
-                                <td class="bold simsun l-col bold">{{ $products[$i]->name }}</td>
-                                @for ($j = 1; $j < 16; $j++)
-                                    <td>
-                                        @foreach ( $data->monthly_orders as $order )
-                                            @if ( Carbon\Carbon::parse($order->ordered_date)->format('d') == $j 
-                                                AND $order->product_id == $products[$i]->id )
-                                                {{ $order->quantity }}
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                @endfor
-                            </tr>
-                        @endfor
-                        <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
-                            @for ($i = 1; $i < 16; $i++)
-                                <td style="border-top: 2px solid #b5b5b5">
-                                @foreach ( $data->daily_sums as $sum )
-                                    @if ( Carbon\Carbon::parse($sum->ordered_date)->format('d') == $i )
-                                        {{ $sum->sum + 0 }}
-                                    @endif
-                                @endforeach
-                                </td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table text-center m-t-10">
-                    <tbody>
-                        <tr class="bold">
-                            <th></th>
-                            @for ($i = 16; $i < 32; $i++)
-                                <th>{{ $i }}</th>
-                            @endfor
-                        </tr>
-                        @for ($i = 0; $i < count($products); $i++)
-                            <tr>
-                                <td class="bold simsun l-col bold">{{ $products[$i]->name }}</td>
-                                @for ($j = 16; $j < 32; $j++)
-                                    <td>
-                                        @foreach ( $data->monthly_orders as $order )
-                                            @if ( Carbon\Carbon::parse($order->ordered_date)->format('d') == $j 
-                                                AND $order->product_id == $products[$i]->id )
-                                                {{ $order->quantity }}
-                                            @endif
-                                        @endforeach
-                                    </td>
-                                @endfor
-                            </tr>
-                        @endfor
-                        <tr>
-                            <td class="simsun l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>
-                            @for ($i = 16; $i < 32; $i++)
-                                <td style="border-top: 2px solid #b5b5b5">
-                                @foreach ( $data->daily_sums as $sum )
-                                    @if ( Carbon\Carbon::parse($sum->ordered_date)->format('d') == $i )
-                                        {{ $sum->sum + 0 }}
-                                    @endif
-                                @endforeach
-                                </td>
-                            @endfor
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="table borderless m-t-10">
-                    <tr>
-                        <td width="55%"><h2 class="simsun text-center">Receipt</h2></td>
-                        <td>
-                            <table class="table simsun borderless text-right">
-                                @for ($i = 0; $i < count($products); $i++)
-                                    <tr>
-                                        <td style="width:30%;border-bottom:1px solid #333">{{ $products[$i]->name }} (Total quantity)</td>
-                                        @forelse ($data->monthly_sums as $item)
-                                            @if ($item->name == $products[$i]->name)
-                                            <td style="border-bottom:1px solid #333">{{ $item->total_quantity }}</td>
-                                            <td style="border-bottom:1px solid #333">Price</td>
-                                            <td style="width:15%;border-bottom:1px solid #333">${{ $item->price + 0 }}/{{ $item->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">Total</td>
-                                            <td style="width:20%;border-bottom:1px solid #333">${{ $item->sum + 0 }}</td>
-                                            @endif
-                                        @empty
-                                            <td style="border-bottom:1px solid #333"></td>
-                                            <td style="border-bottom:1px solid #333">Price</td>
-                                            <td style="width:15%;border-bottom:1px solid #333">/{{ $products[$i]->unit }}</td>
-                                            <td style="border-bottom:1px solid #333">Total</td>
-                                            <td style="width:20%;border-bottom:1px solid #333"></td>
-                                        @endforelse
-                                    </tr>
-                                @endfor
-                                <tr>
-                                    <td colspan="5" style="width: 85%">Total amount</td>
-                                    <td style="width: 15%;border-top:1px solid #333">{{ $data->client_sum ? 'NT$' . ($data->client_sum->sum + 0) : '' }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            @if ( $key + 1 < count($clients_arr) )
-            <div class="page-break"></div>
-            @endif
-        @endforeach
+        <div id="container">
+            <button id="print-btn" class="no-print" onClick="window.print()">Print</button>
+
+            <div id="content"></div>
+        </div>
+
+        <script src="{{ asset('public/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('public/plugins/nprogress/nprogress.js') }}"></script>
+        <script>
+             var resizefunc = [];
+
+            window.onload = function() {
+                NProgress.start();
+            }
+
+            $(document).ready(function(){
+
+                $.get('{{ URL::current() }}', function( data ) {
+                    //console.log(data);
+                    var html = [], block = [];
+                    $.each(data.clients_arr, function( index, obj ) {
+                        //console.log(obj);
+                        html.push('<div class="block">');
+                        for(var j = 0; j < 2; j++) {
+                            html.push('<table class="table borderless">',
+                            '<tr style="font-size:17px">',
+                            '<td style="width:15%">Type: <span class="bold">' + obj.client.route + obj.client.route_number + '</span></td>',
+                            '<td>Client: <span class="bold">' + obj.client.name + '</span></td>',
+                            '<td class="text-right">Month: <span class="bold">{{ $current_month }}</span></td>',
+                            '</tr></table><table class="table text-center m-t-5"><tbody><tr class="bold"><th></th>');
+                            for(var i = 1; i < 16; i++) {
+                                html.push('<th>' + i + '</th>');
+                            }
+                            html.push('</tr>');
+                            $.each(data.products, function( index, product ) {
+                                html.push('<tr>');
+                                html.push('<td class="bold l-col bold">' + product.name + '</td>');
+                                    for(var i = 1; i < 16; i++) {
+                                        html.push('<td>');
+                                        $.each(obj.monthly_orders, function( index, order ) {
+                                            var date = new Date(order.ordered_date);
+                                            if(date.getDate() == i && order.product_id == product.id) {
+                                                html.push(order.quantity);
+                                            }
+                                        });
+                                        html.push('</td>');
+                                    }
+                                html.push('</tr>');
+                            });
+                            
+                            html.push('<tr><td class="l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>');
+                                for(var i = 1; i < 16; i++) {
+                                    html.push('<td style="border-top: 2px solid #b5b5b5;width:5%">');
+                                    $.each(obj.daily_sums, function( index, sum ) {
+                                        var date = new Date(sum.ordered_date);
+                                        if(date.getDate() == i) {
+                                            html.push(parseInt(sum.sum));
+                                        }
+                                    });
+                                    html.push('</td>');
+                                }
+                            html.push('</tr></tbody></table>');
+                            html.push('<table class="table text-center m-t-10"><tbody><tr class="bold"><th></th>');
+                            for(var i = 16; i < 32; i++) {
+                                html.push('<th>' + i + '</th>');
+                            }
+                            html.push('</tr>');
+                            $.each(data.products, function( index, product ) {
+                                html.push('<tr>');
+                                html.push('<td class="bold l-col bold">' + product.name + '</td>');
+                                    for(var i = 16; i < 32; i++) {
+                                        html.push('<td>');
+                                        $.each(obj.monthly_orders, function( index, order ) {
+                                            var date = new Date(order.ordered_date);
+                                            if(date.getDate() == i && order.product_id == product.id) {
+                                                html.push(order.quantity);
+                                            }
+                                        });
+                                        html.push('</td>');
+                                    }
+                                html.push('</tr>');
+                            });
+                            
+                            html.push('<tr><td class="l-col bold" style="border-top: 2px solid #b5b5b5">Daily sum</td>');
+                                for(var i = 16; i < 32; i++) {
+                                    html.push('<td style="border-top: 2px solid #b5b5b5;width:4.7%">');
+                                    $.each(obj.daily_sums, function( index, sum ) {
+                                        var date = new Date(sum.ordered_date);
+                                        if(date.getDate() == i) {
+                                            html.push(parseInt(sum.sum));
+                                        }
+                                    });
+                                    html.push('</td>');
+                                }
+                            html.push('</tr></tbody></table><table class="table borderless m-t-10"><tr><td width="55%"><h2 class="text-center receipt">Receipt</h2></td><td><table class="table  borderless text-right">');
+                            $.each(data.products, function( index, product ) {
+                                html.push('<tr><td style="border-bottom:1px solid #333">');
+                                html.push(product.name + '</td>');
+                                if(obj.monthly_sums.length > 0) {
+                                    $.each(obj.monthly_sums, function( index, item ) {
+                                        if(item.name == product.name) {
+                                            html.push('<td style="border-bottom:1px solid #333">' + item.total_quantity + '</td>');
+                                            html.push('<td style="border-bottom:1px solid #333">Price</td>');
+                                            html.push('<td style="width:15%;border-bottom:1px solid #333">' + parseInt(item.price) + '/' + product.unit + '</td>');
+                                            html.push('<td style="border-bottom:1px solid #333;padding-right:15px">Amount</td>');
+                                            html.push('<td style="width:25%;border-bottom:1px solid #333">' + parseInt(item.sum) + '</td>');
+                                        }
+                                    });
+                                } else {
+                                    html.push('<td style="border-bottom:1px solid #333"></td>');
+                                    html.push('<td style="border-bottom:1px solid #333">Price</td>');
+                                    html.push('<td style="width:15%;border-bottom:1px solid #333">/' + product.unit + '</td>');
+                                    html.push('<td style="border-bottom:1px solid #333;padding-right:15px">Amount</td>');
+                                    html.push('<td style="width:25%;border-bottom:1px solid #333"></td>');
+                                }
+
+                                html.push('</tr>');
+                            });
+
+                            html.push('<tr><td colspan="5" style="width: 100%;padding-right: 15px;">Total NT$</td><td style="width: 25%;border-top:1px solid #333">');
+                            html.push(obj.client_sum ? parseInt(obj.client_sum.sum) : '');
+                            html.push('</td></tr>');
+
+                            html.push('</table></td></tr></table><hr>');
+                        }
+                        html.push('</div>');
+                    });
+                    $('#content').append(html.join(''));
+                    $('.receipt:even').append(' (Kept by Payee)');
+                    $('hr:odd').hide();
+                    $('.block:not(:last)').after('<div class="page-break"></div>');
+                    NProgress.done();
+                });
+            });
+        </script>
     </body>
 </html>

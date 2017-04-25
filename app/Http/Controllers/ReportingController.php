@@ -32,49 +32,43 @@ class ReportingController extends Controller
     {
         $date_obj = Carbon::createFromDate (null, $month, null );
         $current_month = $date_obj->format('Y-m');
-        $date_obj->modify('first day of');
-        $start = $date_obj->format('Y-m-d');
-        $date_obj->modify('last day of');
-        $end = $date_obj->format('Y-m-d');
-
-        // get first 10 records
-        $clients = Clients::where( 'route', '=', strtoupper($route) )->orderBy('route_number')->get();
-        if ( $clients->count() == 0 )
-        {
-            \Session::flash('state', 'warning');
-            \Session::flash('message', 'No record found');
-            return \Redirect::route('reporting.index');
-        }
-        $products = Products::all();
-        $clients_arr = [];
-        foreach ($clients as $key => $client)
-        {
-            $obj = new \stdClass();
-            $obj->client = $client;
-            $obj->monthly_orders = Orders::monthlyOrders( $client->id, $start, $end )->get();
-            $obj->daily_sums = Orders::dailySums( $client->id, $start, $end )->get();
-            $obj->monthly_sums = Orders::monthlySums( $client->id, $client->is_small, $start, $end )->get();
-            $obj->client_sum = Orders::clientSums( $client->id, $start, $end )->first();
-            $clients_arr[$key] = $obj;
-        }
-
-        $pdf_url = url('reporting', ['pdf', $month, $route, 'print']);
         $title = $route . ' ' . $current_month . ' Report';
-        // dd($clients_arr);
-        if ( $action == 'print' )
+        if ( \Request::ajax() )
         {
-            ini_set('memory_limit','2048M');
-            set_time_limit(0);
-             $pdf = \PDF::loadView('pdf.print', compact('title', 'products', 'clients_arr', 'current_month'))
-                ->setPaper('a4', 'landscape');
-            return $pdf->download($route . '-' . $current_month . '-report.pdf');
-        }
-        else
-        {
+            $date_obj->modify('first day of');
+            $start = $date_obj->format('Y-m-d');
+            $date_obj->modify('last day of');
+            $end = $date_obj->format('Y-m-d');
+
+            // get first 10 records
+            $clients = Clients::where( 'route', '=', strtoupper($route) )->orderBy('route_number')->get();
+            if ( $clients->count() == 0 )
+            {
+                \Session::flash('state', 'warning');
+                \Session::flash('message', 'No record found');
+                return \Redirect::route('reporting.index');
+            }
+            $products = Products::all();
+            $clients_arr = [];
+            foreach ($clients as $key => $client)
+            {
+                $obj = new \stdClass();
+                $obj->client = $client;
+                $obj->monthly_orders = Orders::monthlyOrders( $client->id, $start, $end )->get();
+                $obj->daily_sums = Orders::dailySums( $client->id, $start, $end )->get();
+                $obj->monthly_sums = Orders::monthlySums( $client->id, $client->is_small, $start, $end )->get();
+                $obj->client_sum = Orders::clientSums( $client->id, $start, $end )->first();
+                $clients_arr[$key] = $obj;
+            }
+
+            // $pdf_url = url('reporting', ['pdf', $month, $route, 'print']);
             ini_set('memory_limit','1024M');
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
             set_time_limit(0);
-            return view('pdf.print', compact('title', 'products', 'clients_arr', 'current_month', 'pdf_url'));
+
+            return \Response::json( compact('products', 'clients_arr') );
         }
+
+        return view('pdf.print', compact('title', 'current_month') );
     }
 }

@@ -183,47 +183,41 @@ class ClientsController extends Controller
     {
         $now_obj = Carbon::now();
         $current_month = $now_obj->format('Y-m');
-        $now_obj->modify('first day of');
-        $start = $now_obj->format('Y-m-d');
-        $now_obj->modify('last day of');
-        $end = $now_obj->format('Y-m-d');
+        $client = Clients::where( 'id', '=', $id )->first();
 
-        $monthly_orders = Orders::monthlyOrders($id, $start, $end)->get();
-
-        if ( $monthly_orders->count() == 0 )
+        if ( \Request::ajax() )
         {
-            \Session::flash('state', 'warning');
-            \Session::flash('message', 'No record found');
-            return \Redirect::route('clients.index');
-        }
+            $now_obj->modify('first day of');
+            $start = $now_obj->format('Y-m-d');
+            $now_obj->modify('last day of');
+            $end = $now_obj->format('Y-m-d');
 
-        $clients_arr = [];
-        $client = '';
-        
-        for ($i = 0; $i < 1; $i++)
-        {
-            $obj = new \stdClass();
-            $client = Clients::where( 'id', '=', $id )->first();
-            $obj->client = $client;
-            $obj->monthly_orders = $monthly_orders;
-            $obj->daily_sums = Orders::dailySums( $id, $start, $end )->get();
-            $obj->monthly_sums = Orders::monthlySums( $id, $client->is_small, $start, $end )->get();
-            $obj->client_sum = Orders::clientSums( $id, $start, $end )->first();
-            $clients_arr[$i] = $obj;
+            $monthly_orders = Orders::monthlyOrders($id, $start, $end)->get();
+
+            if ( $monthly_orders->count() == 0 )
+            {
+                \Session::flash('state', 'warning');
+                \Session::flash('message', 'No record found');
+                return \Redirect::route('clients.index');
+            }
+
+            $clients_arr = [];
+            
+            for ($i = 0; $i < 1; $i++)
+            {
+                $obj = new \stdClass();
+                $obj->client = $client;
+                $obj->monthly_orders = $monthly_orders;
+                $obj->daily_sums = Orders::dailySums( $id, $start, $end )->get();
+                $obj->monthly_sums = Orders::monthlySums( $id, $client->is_small, $start, $end )->get();
+                $obj->client_sum = Orders::clientSums( $id, $start, $end )->first();
+                $clients_arr[$i] = $obj;
+            }
+            
+            $products = Products::all();
+            return \Response::json( compact('products', 'clients_arr') );
         }
-        
-        $products = Products::all();
-        $pdf_url = url('clients', [$id, 'pdf', 'print']);
         $title = $client->route . $client->route_number . ' ' . $client->name . ' Report';
-        if ( $action == 'print' )
-        {
-             $pdf = \PDF::loadView('pdf.print', compact('title', 'products', 'clients_arr', 'current_month'))
-                ->setPaper('a4', 'landscape');
-            return $pdf->stream($client->route . $client->route_number . '-' . $current_month . '-report.pdf');
-        }
-        else
-        {
-           return view('pdf.print', compact('title', 'products', 'clients_arr', 'current_month', 'pdf_url'));
-        }
+        return view('pdf.print', compact('title', 'current_month') );
     }
 }

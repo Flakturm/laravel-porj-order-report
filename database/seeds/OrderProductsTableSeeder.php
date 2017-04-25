@@ -12,6 +12,6 @@ class OrderProductsTableSeeder extends Seeder
     public function run()
     {
         DB::table('order_products')->delete();
-        factory(turnip\OrderProducts::class, 100)->create();
+        factory(turnip\OrderProducts::class, 50)->create();
     }
 }
