@@ -90,7 +90,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Total</label>
                                 <div class="col-sm-10">
-                                    <p class="form-control-static">${{ $results->total }}</p>
+                                    <p class="form-control-static">${{ $results->total + 0 }}</p>
                                 </div>
                             </div>
                             <div class="form-group">
