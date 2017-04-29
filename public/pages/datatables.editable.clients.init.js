@@ -43,7 +43,7 @@
 				columns: [
 					{ title: 'Type', data: 'route' },
                     { title: 'Number', data: 'route_number' },
-					{ title: 'Client', data: 'name' },
+					{ title: 'Name', data: 'name' },
 					{ title: 'Size', data: 'is_small', name: 'is_small', className: 'client-size', render: function(data,type,row,meta){
 						return data == 1 ? 'Small' : 'Regular';
 					} },
@@ -177,14 +177,14 @@
 					if ( data.is_small == 1 ) {
 						selected = ' selected';
 					}
-					$this.html( '<select id="is_small"><option value="0"' + selected + '>普通</option><option value="1"' + selected + '>小</option></select>' );
+					$this.html( '<select id="is_small"><option value="0"' + selected + '>Regular</option><option value="1"' + selected + '>Small</option></select>' );
 				} else if ( $this.hasClass('client-invoiced') ) {
 					var selected;
 					
 					if ( data.invoiced_daily == 1 ) {
 						selected = ' selected';
 					}
-					$this.html('<select id="invoiced_daily"><option value="0"' + selected + '>年</option><option value="1"' + selected + '>日</option></select>');
+					$this.html('<select id="invoiced_daily"><option value="0"' + selected + '>Annually</option><option value="1"' + selected + '>Daily</option></select>');
 				} else {
 					var id, value;
 					if (i == 0) {
@@ -254,11 +254,11 @@
 							values['action'] = _self.datatable.cell( this ).data();
 							// return 
 						} else if ( $this.hasClass('client-size') ) {
-							var text = ( $this.find('#is_small').val() == 1 )? '小' : '普通';
+							var text = ( $this.find('#is_small').val() == 1 )? 'Small' : 'Regular';
 							values['is_small'] = $.trim( text );
 							// return 
 						} else if ( $this.hasClass('client-invoiced') ) {
-							var text = ( $this.find('#invoiced_daily').val() == 1 )? '日' : '年';
+							var text = ( $this.find('#invoiced_daily').val() == 1 )? 'Daily' : 'Annually';
 							values['invoiced_daily'] = $.trim( text );
 							// return $.trim( text );
 						} else {

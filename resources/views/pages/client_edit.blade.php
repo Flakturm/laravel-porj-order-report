@@ -30,37 +30,37 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <h4 class="m-t-0 header-title"><b>客戶資料</b></h4>
+                    <h4 class="m-t-0 header-title"><b>Edit Client</b></h4>
                                     
                         {{ Form::open(['route' => ['clients.update', $results->id], 'method' => 'PUT', 'class' => 'form-horizontal']) }}
                             <div class="form-group">
-                                {{ Form::label('route', '路線', array('class' => 'col-md-2 control-label')) }}
+                                {{ Form::label('route', 'Type', array('class' => 'col-md-2 control-label')) }}
                                 <div class="col-md-10 row">
                                         <div class="col-md-1">
                                             {{ Form::text('route', $results->route, array('class' => 'form-control')) }}
                                         </div>
-                                        {{ Form::label('route_number', '編號', array('class' => 'col-md-1 control-label')) }}
+                                        {{ Form::label('route_number', 'Number', array('class' => 'col-md-1 control-label')) }}
                                         <div class="col-md-2">
                                             {{ Form::text('route_number', $results->route_number, array('class' => 'form-control number_only')) }}
                                         </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('name', '客戶', array('class' => 'col-md-2 control-label')) }}
+                                {{ Form::label('name', 'Name', array('class' => 'col-md-2 control-label')) }}
                                 <div class="col-md-10">
                                     {{ Form::text('name', $results->name, array('class' => 'form-control')) }}                               
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('size', '尺寸', array('class' => 'col-md-2 control-label')) }}
+                                {{ Form::label('size', 'Size', array('class' => 'col-md-2 control-label')) }}
                                 <div class="col-md-2">
-                                     {{ Form::select('is_small', [0 => '普通', 1 => '小'], $results->is_small, ['class' => 'form-control selectpicker', 'data-style' => 'btn-white']) }}
+                                     {{ Form::select('is_small', [0 => 'Regular', 1 => 'Small'], $results->is_small, ['id' => 'size', 'class' => 'form-control selectpicker', 'data-style' => 'btn-white']) }}
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('invoiced_daily', '請款頻率', array('class' => 'col-md-2 control-label')) }}
+                                {{ Form::label('invoiced_daily', 'Invoiced', array('class' => 'col-md-2 control-label')) }}
                                 <div class="col-md-2">
-                                    {{ Form::select('invoiced_daily', [0 => '年', 1 => '日'], $results->invoiced_daily, ['class' => 'form-control selectpicker', 'data-style' => 'btn-white']) }}
+                                    {{ Form::select('invoiced_daily', [0 => 'Annually', 1 => 'Daily'], $results->invoiced_daily, ['id' => 'invoiced_daily', 'class' => 'form-control selectpicker', 'data-style' => 'btn-white']) }}
                                 </div>
                             </div>
                             {{ Form::hidden('edit', true) }}
@@ -73,9 +73,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="btn-group pull-right m-b-15">
-                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false">預覽 <span class="m-l-5"><i class="fa fa-print"></i></span></button>
+                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false">Preview <span class="m-l-5"><i class="fa fa-print"></i></span></button>
                         <ul class="dropdown-menu drop-menu-right" role="menu">
-                            <li><a href="{{ url('clients', [$results->id, 'pdf', 'preview']) }}" target="_blank">當月訂單</a></li>
+                            <li><a href="{{ url('clients', [$results->id, 'pdf', 'preview']) }}" target="_blank">Current Month</a></li>
                         </ul>
                 </div>
             </div>
@@ -83,15 +83,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box table-responsive">
-                <h4 class="m-t-10 header-title"><b>訂單</b></h4>
+                <h4 class="m-t-10 header-title"><b>Orders</b></h4>
                     <table id="datatable-buttons" class="table table-striped table-bordered table-hover table-actions-bar">
                         <thead>
                         <tr>
                             <th></th>
-                            <th>訂單 ID</th>
-                            <th>訂購日期</th>
-                            <th class="text-right">總計</th>
-                            <th class="text-right">動作</th>
+                            <th>ID</th>
+                            <th>Ordered date</th>
+                            <th class="text-right">Total</th>
+                            <th class="text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -100,7 +100,7 @@
                             <td><a href=""><i class="ion-arrow-right-b"></i></a></td>
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->ordered_date }}</td>
-                            <td class="text-right">${{ $order->total }}</td>
+                            <td class="text-right">${{ $order->total + 0 }}</td>
                             <td class="actions text-right">
                                 <a href="{{ route('orders.edit', $order->id) }}" class="table-action-btn"><i class="md md-edit"></i></a>
                                 {{-- <a href="" class="on-default remove-row" data-id="{{ $order->id }}" data-action="{{ route('orders.destroy', $order->id) }}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash-o"></i></a> --}}
@@ -176,7 +176,13 @@
             });
         }
         $(document).ready(function () {
-            
+            @if (Session::has("state"))
+                $.Notification.notify(
+                    '{{ Session::get("state") }}',
+                    'top right',
+                    '{{ Session::get("message") }}'
+                );
+            @endif
             $('.number_only').on('keypress', function(event){
                 if (event.keyCode < 48 || event.keyCode > 57)
                     return false;
