@@ -15,21 +15,16 @@
         <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
+                <div class="btn-group pull-right m-t-5">
+                    <a href="{{ url('clients/create') }}" class="btn btn-default waves-effect waves-light">Add <span class="m-l-5"><i class="ion-plus"></i></span></a>
+                </div>
                 @crumbs
             </div>
         </div>
 
         <div class="panel">
                             
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="m-b-30">
-                            <button id="addToTable" class="btn btn-default waves-effect waves-light">Add <i class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                
+            <div class="panel-body">                
                 <table class="table table-striped" id="datatable-editable">
                 </table>
             </div>
@@ -59,13 +54,6 @@
                 '{{ Session::get("state") }}',
                 'top right',
                 '{{ Session::get("message") }}'
-            );
-        @endif
-        @if (Session::has("success"))
-            $.Notification.notify(
-                'success',
-                'top right',
-                '{{ Session::get("success") }}'
             );
         @endif
         $('[data-toggle="tooltip"]').tooltip(); 

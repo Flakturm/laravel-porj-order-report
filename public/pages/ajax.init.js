@@ -52,15 +52,17 @@ $(function () {
     $('.save_client_btn').on('click', function () {
         var formData = {
             redirect: $(this).data('redirect'),
-            id: $(this).data('id'),
-            route: $('[name="route"]').val(),
+            route: $('[name="route"]').val().toUpperCase(),
             route_number: $('[name="route_number"]').val(),
             name: $('[name="name"]').val(),
-            is_small: $('[name="is_small]').val(),
-            invoiced_daily: $('[name="invoiced_daily"]').val()
+            is_small: $('#size').val(),
+            invoiced_daily: $('#invoiced_daily').val()
+        }
+        if ($(this).data('id')) {
+            formData.id = $(this).data('id');
         }
 
-        var type = $('[name="_method"]').val();
+        var type = $('[name="_method"]').val() ? $('[name="_method"]').val() : 'POST';
         var url = $('form').prop('action');
 
         doAjax( type, url ,formData );

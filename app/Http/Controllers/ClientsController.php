@@ -39,6 +39,14 @@ class ClientsController extends Controller
         return view('pages.clients');
     }
 
+    public function create()
+    {
+        \Crumbs::add('/clients', 'Client');
+        \Crumbs::addCurrent("Add");
+        
+        return view('pages.client_create');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -76,8 +84,13 @@ class ClientsController extends Controller
         }
 
         $client = Clients::create( $request->all() );
-
-        return \Response::json(array('success' => true, 'record_id' => $client->id), 200);
+        $request->session()->flash('state', 'success');
+        $request->session()->flash('message', 'Client saved');
+        if ( $request->input('redirect') )
+        {
+            return \Response::json(array('success' => true, 'redirect' => route('clients.index')), 200);
+        }
+        return \Response::json(array('success' => true, 'redirect' => route('clients.create')), 200);
     }
 
     public function edit( $id )
@@ -85,7 +98,7 @@ class ClientsController extends Controller
         try
         {
             $results = Clients::with('orders.orderProducts')->findOrFail( $id );
-            \Crumbs::add('/clients', '客戶名單');
+            \Crumbs::add('/clients', 'Clients');
             \Crumbs::addCurrent($results->name);
             $order_products = [];
             foreach ( $results->orders as $key => $val)
